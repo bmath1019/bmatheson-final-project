@@ -12,3 +12,18 @@
   display: block;
   margin: 0 auto;
 }
+
+.f3{
+	stroke: #F24C27;
+	fill: none;
+}
+
+.f3x{
+	stroke: #037E8C;
+	fill: none;
+}
+
+.f5{
+	stroke: #5F5448;
+	fill: none;
+}
