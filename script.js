@@ -4,7 +4,9 @@ var app;
 // additional .defer() calls with additional data files, and they are returned as results[1],
 // results[2], etc., once they have all finished downloading.
 d3.queue()
-  .defer(d3.json, 'data/data.json')
+  .defer(d3.json, 'data/data_reports.json')
+  .defer(d3.json, 'data/data_pages.json')
+  .defer(d3.json, 'data/data_dollars.json')
   .awaitAll(function (error, results) {
     if (error) { throw error; }
     app.initialize(results[0]);
