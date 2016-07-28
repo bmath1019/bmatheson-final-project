@@ -25,7 +25,6 @@ app = {
 
     data.forEach(function(d) {
         d.date = parseDate(d.date)
-        d.reports = +d.reports;
     });
 
     // Here we create each of the components on our page, storing them in an array
@@ -69,8 +68,8 @@ function Chart(selector) {
     .range([0, chart.width])
     .nice();
 
-  var maxF3 = d3.max(app.data, function (d) { return d.f3; })
-  var maxF3X = d3.max(app.data, function (d) { return d.f3x; })
+  var maxF3 = d3.max(app.data, function (d) { return d.f3Rep; })
+  var maxF3X = d3.max(app.data, function (d) { return d.f3xRep; })
 
   chart.y = d3.scaleLinear()
     .domain([0, d3.max([maxF3,maxF3X])])
@@ -102,7 +101,6 @@ function Chart(selector) {
     .call(yAxis)
     .append('text')
     .attr('transform', 'rotate(-90)')
-    .attr('dy', '.71em')
     .attr('y', -35)
     .attr('x', 0)
     .style('text-anchor', 'end')
@@ -127,15 +125,15 @@ Chart.prototype = {
 
     var lineF3 = d3.line()
       .x(function (d) { return chart.x(d.date)})
-      .y(function (d) { return chart.y(d.f3)})
+      .y(function (d) { return chart.y(d.f3Rep)})
 
     var lineF3X = d3.line()
       .x(function (d) { return chart.x(d.date)})
-      .y(function (d) { return chart.y(d.f3x)})
+      .y(function (d) { return chart.y(d.f3xRep)})
 
     var lineF5 = d3.line()
       .x(function (d) { return chart.x(d.date)})
-      .y(function (d) { return chart.y(d.f5)})
+      .y(function (d) { return chart.y(d.f5Rep)})
 
     chart.svg.append("path")
         .datum(txData)
