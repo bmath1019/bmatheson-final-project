@@ -10,6 +10,11 @@ d3.queue()
   .awaitAll(function (error, results) {
     if (error) { throw error; }
     app.initialize(results[0]);
+  
+  // var charts = [
+  //     new Chart('#reports')
+  //   ];
+
   });
 
 app = {
@@ -17,7 +22,7 @@ app = {
   components: [],
 
   options: {
-    type: 'reports'
+    value: 'reports'
   },
 
   initialize: function (data) {
@@ -35,7 +40,7 @@ app = {
     ];
 
     // Add event listeners and the like here
-    d3.select('#type').on('change', function () {
+    d3.select('#value').on('click', function () {
       options.type = d3.event.target.value;
       charts.forEach(function (chart) {chart.update();});
     });
@@ -120,8 +125,6 @@ Chart.prototype = {
     // TRANSFORM DATA
 
     var txData = app.data.slice();
-
-      // var txData = app.data.filter(function (d) { return d.reports === app.options.reports; });
 
     // UPDATE CHART ELEMENTS
 
