@@ -5,10 +5,6 @@ d3.queue()
   .awaitAll(function (error, results) {
     if (error) { throw error; }
     app.initialize(results[0]);
-  
-  // var charts = [
-  //     new Chart('#reports')
-  //   ];
 
   });
 
@@ -85,10 +81,18 @@ function Chart(selector) {
     .range([0, chart.width])
     .nice();
 
+  chart.y = d3.scaleLinear()
+    .domain([0, 100])
+    .range([chart.height, 0])
+    .nice();
+
   // AXES
 
   var xAxis = d3.axisBottom()
     .scale(chart.x);
+
+  var yAxis = d3.axisLeft()
+    .scale(chart.y);
 
   chart.svg.append('g')
     .attr('class', 'x axis')
@@ -102,7 +106,25 @@ function Chart(selector) {
     .style('font-weight', 'bold')
     .text('Date');
 
+  chart.svg.append('g')
+    .attr('class', 'y axis')
+    .call(yAxis)
+    .append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('y', -35)
+    .attr('x', 0)
+    .attr('id','pathRemove')
+    .style('text-anchor', 'end')
+    .style('fill', '#000')
+    .style('font-weight', 'bold')
+    .text('Log Number of Reports');
+
+  pathF3 = chart.svg.append("path");
+  pathF3X = chart.svg.append("path");
+  pathF5 = chart.svg.append("path");
+
   chart.update();
+
 }
 
 Chart.prototype = {
@@ -118,10 +140,8 @@ Chart.prototype = {
       })
     }
 
-    // UPDATE CHART ELEMENTS
-
-    var maxF3 = d3.max(txData, function (d) { return d.f3; })
-    var maxF3X = d3.max(txData, function (d) { return d.f3x; })
+      var maxF3 = d3.max(txData, function (d) { return d.f3; })
+      var maxF3X = d3.max(txData, function (d) { return d.f3x; })
 
     chart.y = d3.scaleLinear()
       .domain([0, d3.max([maxF3,maxF3X])])
@@ -131,58 +151,54 @@ Chart.prototype = {
     var yAxis = d3.axisLeft()
       .scale(chart.y);
 
-    chart.svg.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis)
-      .append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', -35)
-      .attr('x', 0)
-      .attr('id','pathRemove')
-      .style('text-anchor', 'end')
-      .style('fill', '#000')
-      .style('font-weight', 'bold')
-      .text('Log Number of Reports');
+    chart.svg.select('.y.axis')
+      .call(yAxis); 
 
-    var lineF3 = d3.line()
+    // UPDATE CHART ELEMENTS
+
+    lineF3 = d3.line()
       .x(function (d) { return chart.x(d.date)})
       .y(function (d) { return chart.y(d.f3)})
 
-    var lineF3X = d3.line()
+    lineF3X = d3.line()
       .x(function (d) { return chart.x(d.date)})
       .y(function (d) { return chart.y(d.f3x)})
 
-    var lineF5 = d3.line()
+    lineF5 = d3.line()
       .x(function (d) { return chart.x(d.date)})
       .y(function (d) { return chart.y(d.f5)})
 
-    var pathF3 = chart.svg.append("path").datum(txData)
-    var pathF3X = chart.svg.append("path").datum(txData)
-    var pathF5 = chart.svg.append("path").datum(txData)
+    // var pathF3 = chart.svg.append("path").datum(txData)
+    // var pathF3X = chart.svg.append("path").datum(txData)
+    // var pathF5 = chart.svg.append("path").datum(txData)
 
-    pathF3.attr("class","line f3")
+    pathF3.datum(txData)
+        .attr("class","line f3")
         .attr("id","pathRemove")
         .attr("d",lineF3)
         .style("opacity",.5)
         .style("stroke-width",2);    
 
-    pathF3X.attr("class","line f3x")
+    pathF3X.datum(txData)
+        .attr("class","line f3x")
         .attr("id","pathRemove")    
         .attr("d",lineF3X)
         .style("opacity",.5)
         .style("stroke-width",2);
 
-    pathF5.attr("class","line f5")
+    pathF5.datum(txData)
+        .attr("class","line f5")
         .attr("id","pathRemove")
         .attr("d",lineF5)
         .style("opacity",.5)
         .style("stroke-width",2);
 
-    // d3.selectAll("path").on("click"
-    d3.selectAll("#pathRemove").transition().attr("opacity",0);
-
     console.log(txData)
     console.log(app.options.value)
+
+    d3.selectAll("#path").exit().remove();
+
+
 
   }
 }
