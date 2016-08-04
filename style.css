@@ -18,12 +18,30 @@
 	fill: none;
 }
 
+#f3b{
+	border-color: #F24C27;
+	background-color: #F24C27;
+	opacity: .75;
+}
+
 .f3x{
 	stroke: #037E8C;
 	fill: none;
 }
 
+#f3xb{
+	border-color: #037E8C;
+	background-color: #037E8C;
+	opacity: .75;
+}
+
 .f5{
 	stroke: #5F5448;
 	fill: none;	
+}
+
+#f5b{
+	border-color: #5F5448;
+	background-color: #5F5448;	
+	opacity: .75;
 }

@@ -14,7 +14,7 @@ app = {
 
   options: {
     value: 'reports',
-    filtered: true
+    filtered: true 
   },
 
   initialize: function (data) {
@@ -152,7 +152,7 @@ Chart.prototype = {
       .scale(chart.y);
 
     chart.svg.select('.y.axis')
-      .call(yAxis); 
+      .call(yAxis);
 
     // UPDATE CHART ELEMENTS
 
@@ -168,35 +168,35 @@ Chart.prototype = {
       .x(function (d) { return chart.x(d.date)})
       .y(function (d) { return chart.y(d.f5)})
 
-    // var pathF3 = chart.svg.append("path").datum(txData)
-    // var pathF3X = chart.svg.append("path").datum(txData)
-    // var pathF5 = chart.svg.append("path").datum(txData)
+    pathF3X.datum(txData)
+        .attr("class","line f3x")
+        .attr("id","pathRemove")    
+        .attr("d",lineF3X)
+        .style("opacity",0)
+        .style("stroke-width",3)
+        .transition().delay(1000).duration(1000)
+        .style("opacity",.5);
 
     pathF3.datum(txData)
         .attr("class","line f3")
         .attr("id","pathRemove")
         .attr("d",lineF3)
-        .style("opacity",.5)
-        .style("stroke-width",2);    
-
-    pathF3X.datum(txData)
-        .attr("class","line f3x")
-        .attr("id","pathRemove")    
-        .attr("d",lineF3X)
-        .style("opacity",.5)
-        .style("stroke-width",2);
+        .style("opacity",0)
+        .style("stroke-width",3)
+        .transition().duration(1000)
+        .style("opacity",.5);
 
     pathF5.datum(txData)
         .attr("class","line f5")
         .attr("id","pathRemove")
         .attr("d",lineF5)
-        .style("opacity",.5)
-        .style("stroke-width",2);
+        .style("opacity",0)
+        .style("stroke-width",3)
+        .transition().delay(2000).duration(1000)
+        .style("opacity",.5);
 
     console.log(txData)
     console.log(app.options.value)
-
-    d3.selectAll("#path").exit().remove();
 
 
 
