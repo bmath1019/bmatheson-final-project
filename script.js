@@ -1,12 +1,7 @@
 var app;
 
-// d3.queue() enables us to load multiple data files. Following the example below, we make
-// additional .defer() calls with additional data files, and they are returned as results[1],
-// results[2], etc., once they have all finished downloading.
 d3.queue()
-  .defer(d3.json, 'data/data_reports.json')
-  .defer(d3.json, 'data/data_pages.json')
-  .defer(d3.json, 'data/data_dollars.json')
+  .defer(d3.json, 'data/data.json')
   .awaitAll(function (error, results) {
     if (error) { throw error; }
     app.initialize(results[0]);
@@ -22,7 +17,8 @@ app = {
   components: [],
 
   options: {
-    value: 'reports'
+    value: 'reports',
+    filtered: true
   },
 
   initialize: function (data) {
@@ -34,18 +30,32 @@ app = {
         d.date = parseDate(d.date)
     });
 
-    // Here we create each of the components on our page, storing them in an array
     app.components = [
       new Chart('#chart')
     ];
 
-    // Add event listeners and the like here
-    d3.select('#value').on('click', function () {
-      options.type = d3.event.target.value;
-      charts.forEach(function (chart) {chart.update();});
-    });
+    d3.select("#reports").on("click", function() { 
+      if (app.options.value !== 'reports') {app.options.value = 'reports';
+       app.components.forEach(function (d) {d.update(); });
+      }});
 
-    app.update();
+    d3.select("#pages").on("click", function() { 
+      if (app.options.value !== 'pages') {app.options.value = 'pages';
+      app.components.forEach(function (d) {d.update(); });
+      }
+      });
+
+    d3.select("#dollars").on("click", function() { 
+      if (app.options.value !== 'dollars') {app.options.value = 'dollars';
+      app.components.forEach(function (d) {d.update(); });
+      }
+      });
+
+    // app.update();
+  },
+
+  update: function () {
+    app.components.forEach(function (c) { if (c.update) { c.update(); }});
   }
 }
 
@@ -75,21 +85,10 @@ function Chart(selector) {
     .range([0, chart.width])
     .nice();
 
-  var maxF3 = d3.max(app.data, function (d) { return d.f3Rep; })
-  var maxF3X = d3.max(app.data, function (d) { return d.f3xRep; })
-
-  chart.y = d3.scaleLinear()
-    .domain([0, d3.max([maxF3,maxF3X])])
-    .range([chart.height, 0])
-    .nice();
-
   // AXES
 
   var xAxis = d3.axisBottom()
     .scale(chart.x);
-
-  var yAxis = d3.axisLeft()
-    .scale(chart.y);
 
   chart.svg.append('g')
     .attr('class', 'x axis')
@@ -103,18 +102,6 @@ function Chart(selector) {
     .style('font-weight', 'bold')
     .text('Date');
 
-  chart.svg.append('g')
-    .attr('class', 'y axis')
-    .call(yAxis)
-    .append('text')
-    .attr('transform', 'rotate(-90)')
-    .attr('y', -35)
-    .attr('x', 0)
-    .style('text-anchor', 'end')
-    .style('fill', '#000')
-    .style('font-weight', 'bold')
-    .text('Log Number of Reports');
-
   chart.update();
 }
 
@@ -126,40 +113,76 @@ Chart.prototype = {
 
     var txData = app.data.slice();
 
+    if (app.options.filtered) {
+      txData = txData.filter(function (d){ return d.value === app.options.value;
+      })
+    }
+
     // UPDATE CHART ELEMENTS
+
+    var maxF3 = d3.max(txData, function (d) { return d.f3; })
+    var maxF3X = d3.max(txData, function (d) { return d.f3x; })
+
+    chart.y = d3.scaleLinear()
+      .domain([0, d3.max([maxF3,maxF3X])])
+      .range([chart.height, 0])
+      .nice();
+
+    var yAxis = d3.axisLeft()
+      .scale(chart.y);
+
+    chart.svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis)
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', -35)
+      .attr('x', 0)
+      .attr('id','pathRemove')
+      .style('text-anchor', 'end')
+      .style('fill', '#000')
+      .style('font-weight', 'bold')
+      .text('Log Number of Reports');
 
     var lineF3 = d3.line()
       .x(function (d) { return chart.x(d.date)})
-      .y(function (d) { return chart.y(d.f3Rep)})
+      .y(function (d) { return chart.y(d.f3)})
 
     var lineF3X = d3.line()
       .x(function (d) { return chart.x(d.date)})
-      .y(function (d) { return chart.y(d.f3xRep)})
+      .y(function (d) { return chart.y(d.f3x)})
 
     var lineF5 = d3.line()
       .x(function (d) { return chart.x(d.date)})
-      .y(function (d) { return chart.y(d.f5Rep)})
+      .y(function (d) { return chart.y(d.f5)})
 
-    chart.svg.append("path")
-        .datum(txData)
-        .attr("class","line f3")
+    var pathF3 = chart.svg.append("path").datum(txData)
+    var pathF3X = chart.svg.append("path").datum(txData)
+    var pathF5 = chart.svg.append("path").datum(txData)
+
+    pathF3.attr("class","line f3")
+        .attr("id","pathRemove")
         .attr("d",lineF3)
         .style("opacity",.5)
-        .style("stroke-width",3);    
+        .style("stroke-width",2);    
 
-    chart.svg.append("path")
-        .datum(txData)
-        .attr("class","line f3x")
+    pathF3X.attr("class","line f3x")
+        .attr("id","pathRemove")    
         .attr("d",lineF3X)
         .style("opacity",.5)
-        .style("stroke-width",3);
+        .style("stroke-width",2);
 
-    chart.svg.append("path")
-        .datum(txData)
-        .attr("class","line f5")
+    pathF5.attr("class","line f5")
+        .attr("id","pathRemove")
         .attr("d",lineF5)
         .style("opacity",.5)
-        .style("stroke-width",3);        
+        .style("stroke-width",2);
+
+    // d3.selectAll("path").on("click"
+    d3.selectAll("#pathRemove").transition().attr("opacity",0);
+
+    console.log(txData)
+    console.log(app.options.value)
 
   }
 }
