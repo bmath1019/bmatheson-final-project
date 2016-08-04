@@ -82,7 +82,7 @@ function Chart(selector) {
     .nice();
 
   chart.y = d3.scaleLinear()
-    .domain([0, 100])
+    .domain([0, 100]) // temporary y scale holder until update function runs.
     .range([chart.height, 0])
     .nice();
 
@@ -113,14 +113,13 @@ function Chart(selector) {
     .attr('transform', 'rotate(-90)')
     .attr('y', -35)
     .attr('x', 0)
-    .attr('id','pathRemove')
     .style('text-anchor', 'end')
     .style('fill', '#000')
     .style('font-weight', 'bold')
-    .text('Log Number of Reports');
+    .text('Quantity');
 
-  pathF3 = chart.svg.append("path");
   pathF3X = chart.svg.append("path");
+  pathF3 = chart.svg.append("path");
   pathF5 = chart.svg.append("path");
 
   chart.update();
@@ -140,8 +139,8 @@ Chart.prototype = {
       })
     }
 
-      var maxF3 = d3.max(txData, function (d) { return d.f3; })
-      var maxF3X = d3.max(txData, function (d) { return d.f3x; })
+    var maxF3 = d3.max(txData, function (d) { return d.f3; })
+    var maxF3X = d3.max(txData, function (d) { return d.f3x; })
 
     chart.y = d3.scaleLinear()
       .domain([0, d3.max([maxF3,maxF3X])])
@@ -169,35 +168,32 @@ Chart.prototype = {
       .y(function (d) { return chart.y(d.f5)})
 
     pathF3X.datum(txData)
-        .attr("class","line f3x")
-        .attr("id","pathRemove")    
+        .attr("class","line f3x")  
         .attr("d",lineF3X)
         .style("opacity",0)
-        .style("stroke-width",3)
+        .style("stroke-width",4)
         .transition().delay(1000).duration(1000)
-        .style("opacity",.5);
+        .style("opacity",.9);
 
     pathF3.datum(txData)
         .attr("class","line f3")
-        .attr("id","pathRemove")
         .attr("d",lineF3)
         .style("opacity",0)
-        .style("stroke-width",3)
+        .style("stroke-width",4)
         .transition().duration(1000)
-        .style("opacity",.5);
+        .style("opacity",.9);
 
     pathF5.datum(txData)
         .attr("class","line f5")
-        .attr("id","pathRemove")
         .attr("d",lineF5)
         .style("opacity",0)
-        .style("stroke-width",3)
+        .style("stroke-width",4)
         .transition().delay(2000).duration(1000)
-        .style("opacity",.5);
+        .style("opacity",.9);
 
-    console.log(txData)
-    console.log(app.options.value)
-
+    d3.selectAll('path').on('mouseenter', function() {
+        this.parentElement.appendChild(this);});
+        //Code for reordering elements: http://bl.ocks.org/aharris88/cf29caf142c9592af424
 
 
   }

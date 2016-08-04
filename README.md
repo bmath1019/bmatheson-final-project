@@ -1,4 +1,4 @@
-# Final Project Template
+# Final Project 
 
 ## Getting started
 

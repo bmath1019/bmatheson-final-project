@@ -3,7 +3,7 @@
 }
 
 .header {
-  background: linear-gradient(to bottom, #337ab7 0%, #135a97 100%);
+  background: linear-gradient(to bottom, #646464 0%, #135a97 100%);
   color: white;
   padding: 1em 0 2em;
 }
@@ -14,34 +14,34 @@
 }
 
 .f3{
-	stroke: #F24C27;
+	stroke: #E74C3C;
 	fill: none;
 }
 
 #f3b{
-	border-color: #F24C27;
-	background-color: #F24C27;
+	border-color: #E74C3C;
+	background-color: #E74C3C;
 	opacity: .75;
 }
 
 .f3x{
-	stroke: #037E8C;
+	stroke: #3498DB;
 	fill: none;
 }
 
 #f3xb{
-	border-color: #037E8C;
-	background-color: #037E8C;
+	border-color: #3498DB;
+	background-color: #3498DB;
 	opacity: .75;
 }
 
 .f5{
-	stroke: #5F5448;
+	stroke: #D8DB58;
 	fill: none;	
 }
 
 #f5b{
-	border-color: #5F5448;
-	background-color: #5F5448;	
+	border-color: #D8DB58;
+	background-color: #D8DB58;	
 	opacity: .75;
 }
