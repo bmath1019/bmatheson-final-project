@@ -82,7 +82,7 @@ function Chart(selector) {
     .nice();
 
   chart.y = d3.scaleLinear()
-    .domain([0, 100]) // temporary y scale holder until update function runs.
+    .domain([0, 0]) // temporary y scale holder until update function runs.
     .range([chart.height, 0])
     .nice();
 
@@ -92,7 +92,7 @@ function Chart(selector) {
     .scale(chart.x);
 
   var yAxis = d3.axisLeft()
-    .scale(chart.y);
+    .scale(chart.y)
 
   chart.svg.append('g')
     .attr('class', 'x axis')
@@ -148,10 +148,11 @@ Chart.prototype = {
       .nice();
 
     var yAxis = d3.axisLeft()
-      .scale(chart.y);
+      .scale(chart.y)
+      .tickSize(-chart.width);
 
     chart.svg.select('.y.axis')
-      .call(yAxis);
+      .transition().duration(2000).call(yAxis);
 
     // UPDATE CHART ELEMENTS
 
