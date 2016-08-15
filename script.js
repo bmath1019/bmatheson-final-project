@@ -61,7 +61,7 @@ function Chart(selector) {
   // SVG and MARGINS
 
   var margin = {
-    top: 15, right: 15, bottom: 40, left: 45
+    top: 15, right: 25, bottom: 40, left: 75
   };
 
   chart.width = 1000 - margin.left - margin.right;
@@ -111,7 +111,7 @@ function Chart(selector) {
     .call(yAxis)
     .append('text')
     .attr('transform', 'rotate(-90)')
-    .attr('y', -35)
+    .attr('y', -65)
     .attr('x', 0)
     .style('text-anchor', 'end')
     .style('fill', '#000')
@@ -142,7 +142,7 @@ Chart.prototype = {
     var maxF3 = d3.max(txData, function (d) { return d.f3; })
     var maxF3X = d3.max(txData, function (d) { return d.f3x; })
 
-    chart.y = d3.scaleLinear()
+    chart.y = d3.scaleSqrt()
       .domain([0, d3.max([maxF3,maxF3X])])
       .range([chart.height, 0])
       .nice();
