@@ -14,7 +14,8 @@ app = {
 
   options: {
     value: 'reports',
-    filtered: true 
+    filtered: true,
+    form: 'all',
   },
 
   initialize: function (data) {
@@ -30,6 +31,7 @@ app = {
       new Chart('#chart')
     ];
 
+    // Data Scale Transformations Reports / Pages / Dollars
     d3.select("#reports").on("click", function() { 
       if (app.options.value !== 'reports') {app.options.value = 'reports';
        app.components.forEach(function (d) {d.update(); });
@@ -39,13 +41,34 @@ app = {
       if (app.options.value !== 'pages') {app.options.value = 'pages';
       app.components.forEach(function (d) {d.update(); });
       }
-      });
+    });
 
     d3.select("#dollars").on("click", function() { 
       if (app.options.value !== 'dollars') {app.options.value = 'dollars';
       app.components.forEach(function (d) {d.update(); });
       }
-      });
+    });
+
+    // Highlight specific report type
+    d3.select('#f3b').on("click", function() {
+      if (app.options.form !== 'f3') {app.options.form = 'f3';
+      app.components.forEach(function (d) {d.update(); });
+      }
+    });
+
+    d3.select('#f3xb').on("click", function() {
+      if (app.options.form !== 'f3X') {app.options.form = 'f3X';
+      app.components.forEach(function (d) {d.update(); });
+      }
+    });
+
+    d3.select('#f5b').on("click", function() {
+      if (app.options.form !== 'f5') {app.options.form = 'f5';
+      app.components.forEach(function (d) {d.update(); });
+      }
+    });
+
+
 
     // app.update();
   },
@@ -169,33 +192,28 @@ Chart.prototype = {
       .y(function (d) { return chart.y(d.f5)})
 
     pathF3X.datum(txData)
-        .attr("class","line f3x")  
-        .attr("d",lineF3X)
-        .style("opacity",0)
-        .style("stroke-width",4)
-        .transition().delay(1000).duration(1000)
-        .style("opacity",.9);
+        .attr("class", function () { 
+          if (app.options.form === "f3X"|| app.options.form === "all") {return "f3x"} else {return "inactivef3x"}
+        })  
+        .attr("d",lineF3X);
+
+    console.log(app.options.form)
 
     pathF3.datum(txData)
-        .attr("class","line f3")
-        .attr("d",lineF3)
-        .style("opacity",0)
-        .style("stroke-width",4)
-        .transition().duration(1000)
-        .style("opacity",.9);
+        .attr("class", function () { 
+          if (app.options.form === "f3"|| app.options.form === "all") {return "f3"} else {return "inactivef3"}
+        })
+        .attr("d",lineF3);
 
     pathF5.datum(txData)
-        .attr("class","line f5")
-        .attr("d",lineF5)
-        .style("opacity",0)
-        .style("stroke-width",4)
-        .transition().delay(2000).duration(1000)
-        .style("opacity",.9);
+        .attr("class", function () { 
+          if (app.options.form === "f5"|| app.options.form === "all") {return "f5"} else {return "inactivef5"}
+        })
+        .attr("d",lineF5);
 
     d3.selectAll('path').on('mouseenter', function() {
         this.parentElement.appendChild(this);});
         //Code for reordering elements: http://bl.ocks.org/aharris88/cf29caf142c9592af424
-
 
   }
 }

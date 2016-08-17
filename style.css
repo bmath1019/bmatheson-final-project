@@ -7,9 +7,9 @@ body{
 }
 
 .header {
-  background: linear-gradient(to bottom, #194375 0%, #296FC1 100%);
+  background: linear-gradient(to bottom, #194375 0%, #264875 100%);
   color: #DCDDD8;
-  padding: 1em 0 2em;
+  padding: 1em;
 }
 
 #chart svg {
@@ -20,6 +20,7 @@ body{
 .f3{
 	stroke: #E74C3C;
 	fill: none;
+	stroke-width: 4;
 }
 
 #f3b{
@@ -31,6 +32,7 @@ body{
 .f3x{
 	stroke: #3498DB;
 	fill: none;
+	stroke-width: 4;
 }
 
 #f3xb{
@@ -42,10 +44,29 @@ body{
 .f5{
 	stroke: #D8DB58;
 	fill: none;	
+	stroke-width: 4;
 }
 
 #f5b{
 	border-color: #D8DB58;
 	background-color: #D8DB58;	
 	opacity: .75;
+}
+
+.inactivef3{
+	stroke: #E74C3C;
+	opacity: .3;
+	fill: none;
+}
+
+.inactivef3x{
+	stroke: #3498DB;
+	opacity: .3;
+	fill: none;
+}
+
+.inactivef5{
+	stroke: #D8DB58;
+	opacity: .3;
+	fill: none;
 }
