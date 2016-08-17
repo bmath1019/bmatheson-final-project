@@ -52,7 +52,9 @@ body{
 	background-color: #D8DB58;	
 	opacity: .75;
 }
-
+#all{
+	opacity: .75;
+}
 .inactivef3{
 	stroke: #E74C3C;
 	opacity: .3;

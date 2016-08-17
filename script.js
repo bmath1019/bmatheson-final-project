@@ -68,6 +68,12 @@ app = {
       }
     });
 
+   d3.select('#all').on("click", function() {
+      if (app.options.form !== 'all') {app.options.form = 'all';
+      app.components.forEach(function (d){d.update(); })
+    }
+    });
+
 
 
     // app.update();
