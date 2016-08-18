@@ -30,7 +30,7 @@ body{
 }
 
 #f3circ{
-	fill: none;
+	fill: #E74C3C;
 	stroke: #000000;
 }
 
@@ -47,7 +47,7 @@ body{
 }
 
 #f3xcirc{
-	fill: none;
+	fill: #3498DB;
 	stroke: #000000;
 }
 
@@ -64,7 +64,7 @@ body{
 }
 
 #f5circ{
-	fill: none;
+	fill: #D8DB58;
 	stroke: #000000;
 }
 
@@ -96,4 +96,10 @@ body{
 
 .focus circle {
 	stroke: #000000;
+}
+
+.tooltip {
+        height: auto;
+        padding: 10px;
+        opacity: 1;
 }

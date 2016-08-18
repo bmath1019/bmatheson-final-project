@@ -21,7 +21,7 @@ app = {
   initialize: function (data) {
     app.data = data;
 
-    var parseDate = d3.timeParse("%m/%d/%Y"); //https://bl.ocks.org/d3noob/0e276dc70bb9184727ee47d6dd06e915
+    parseDate = d3.timeParse("%m/%d/%Y"); //https://bl.ocks.org/d3noob/0e276dc70bb9184727ee47d6dd06e915
 
     data.forEach(function(d) {
         d.date = parseDate(d.date)
@@ -247,6 +247,8 @@ Chart.prototype = {
 
   var bisectDate = d3.bisector(function(d) { return d.date; }).left
 
+  // var TOTALDAYS = d3.count
+
     chart.svg
         .on("mouseover", function() { focus.style("display", null); })
         .on("mouseout", function() { focus.style("display", "none"); })
@@ -261,7 +263,7 @@ Chart.prototype = {
       focus.select("#f3xcirc").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
       focus.select("#f3circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3) + ")");
       focus.select("#f5circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f5) + ")");
-      focus.select("text").text("TEST");
+      d3.select("#date").text(function (d){return d0.date});
     };
 
   }
