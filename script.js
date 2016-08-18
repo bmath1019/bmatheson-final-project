@@ -151,6 +151,24 @@ function Chart(selector) {
   pathF3 = chart.svg.append("path");
   pathF5 = chart.svg.append("path");
 
+// tooltip attempt (https://bl.ocks.org/mbostock/3902569)
+
+  focus = chart.svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+
+  chart.svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", chart.width)
+      .attr("height", chart.height);
+
   chart.update();
 
 }
@@ -217,9 +235,23 @@ Chart.prototype = {
         })
         .attr("d",lineF5);
 
-    d3.selectAll('path').on('mouseenter', function() {
-        this.parentElement.appendChild(this);});
-        //Code for reordering elements: http://bl.ocks.org/aharris88/cf29caf142c9592af424
+
+  var bisectDate = d3.bisector(function(d) { return d.date; }).left
+
+    chart.svg
+        .on("mouseover", function() { focus.style("display", null); })
+        .on("mouseout", function() { focus.style("display", "none"); })
+        .on('mousemove', mousemove);
+
+      function mousemove() {
+          var x0 = chart.x.invert(d3.mouse(this)[0]),
+          i = bisectDate(txData, x0, 1),
+          d0 = txData[i - 1],
+          d1 = txData[i],
+          d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+      focus.attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
+      focus.select("text").text("TEST");
+    };
 
   }
 }
