@@ -29,6 +29,11 @@ body{
 	opacity: .75;
 }
 
+#f3circ{
+	fill: none;
+	stroke: #000000;
+}
+
 .f3x{
 	stroke: #3498DB;
 	fill: none;
@@ -39,6 +44,11 @@ body{
 	border-color: #3498DB;
 	background-color: #3498DB;
 	opacity: .75;
+}
+
+#f3xcirc{
+	fill: none;
+	stroke: #000000;
 }
 
 .f5{
@@ -52,6 +62,12 @@ body{
 	background-color: #D8DB58;	
 	opacity: .75;
 }
+
+#f5circ{
+	fill: none;
+	stroke: #000000;
+}
+
 #all{
 	opacity: .75;
 }
@@ -79,6 +95,5 @@ body{
 }
 
 .focus circle {
-  fill: none;
-  stroke: #3498DB;
+	stroke: #000000;
 }

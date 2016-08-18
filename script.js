@@ -158,6 +158,15 @@ function Chart(selector) {
       .style("display", "none");
 
   focus.append("circle")
+      .attr('id',"f3xcirc")
+      .attr("r", 4.5);
+
+  focus.append("circle")
+      .attr('id',"f3circ")
+      .attr("r", 4.5);
+
+  focus.append("circle")
+      .attr('id',"f5circ")
       .attr("r", 4.5);
 
   focus.append("text")
@@ -249,7 +258,9 @@ Chart.prototype = {
           d0 = txData[i - 1],
           d1 = txData[i],
           d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-      focus.attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
+      focus.select("#f3xcirc").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
+      focus.select("#f3circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3) + ")");
+      focus.select("#f5circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f5) + ")");
       focus.select("text").text("TEST");
     };
 
