@@ -103,3 +103,7 @@ body{
         padding: 10px;
         opacity: 1;
 }
+
+.y.axis .domain {
+    display: none;
+}
