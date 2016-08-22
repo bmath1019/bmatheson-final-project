@@ -230,8 +230,6 @@ Chart.prototype = {
         })  
         .attr("d",lineF3X);
 
-    console.log(app.options.form)
-
     pathF3.datum(txData)
         .attr("class", function () { 
           if (app.options.form === "f3"|| app.options.form === "all") {return "f3"} else {return "inactivef3"}
@@ -244,10 +242,19 @@ Chart.prototype = {
         })
         .attr("d",lineF5);
 
+  var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
-  var bisectDate = d3.bisector(function(d) { return d.date; }).left
+  formatTime = d3.timeFormat("%0m/%0d/%Y")
+  percFormat = d3.format(",.1%") 
 
-  // var TOTALDAYS = d3.count
+  minDate = d3.min(app.data,function (d) {return d.date})
+  maxDate = d3.max(app.data,function (d) {return d.date})
+
+  totDays = (maxDate - minDate)/1000/60/60/24
+  totReps = d3.sum(txData, function(d) { return d.f3; });
+
+  console.log(totReps)
+
 
     chart.svg
         .on("mouseover", function() { focus.style("display", null); })
@@ -259,11 +266,14 @@ Chart.prototype = {
           i = bisectDate(txData, x0, 1),
           d0 = txData[i - 1],
           d1 = txData[i],
-          d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+          d = x0 - d0.date > d1.date - x0 ? d1 : d0
+          percDays = ((d1.date-minDate)/1000/60/60/24)/totDays;
+          // percF3 = 
       focus.select("#f3xcirc").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
       focus.select("#f3circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3) + ")");
       focus.select("#f5circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f5) + ")");
-      d3.select("#date").text(function (d){return d0.date});
+      d3.select("#date").html(function (d){return formatTime(d0.date)});
+      d3.select("#percentDates").html(function (d){return percFormat(percDays)});
     };
 
   }
