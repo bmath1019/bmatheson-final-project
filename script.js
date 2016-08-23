@@ -16,6 +16,7 @@ app = {
     value: 'reports',
     filtered: true,
     form: 'all',
+    cycle: 2016,
   },
 
   initialize: function (data) {
@@ -30,6 +31,24 @@ app = {
     app.components = [
       new Chart('#chart')
     ];
+    
+    // Data Scale Transformations Reports / Pages / Dollars
+    d3.select("#cy2012").on("click", function() { 
+      if (app.options.cycle !== 2012) {app.options.cycle = 2012;
+       app.components.forEach(function (d) {d.update(); });
+      }});
+
+    d3.select("#cy2014").on("click", function() { 
+      if (app.options.cycle !== 2014) {app.options.cycle = 2014;
+      app.components.forEach(function (d) {d.update(); });
+      }
+    });
+
+    d3.select("#cy2016").on("click", function() { 
+      if (app.options.cycle !== 2016) {app.options.cycle = 2016;
+      app.components.forEach(function (d) {d.update(); });
+      }
+    });
 
     // Data Scale Transformations Reports / Pages / Dollars
     d3.select("#reports").on("click", function() { 
@@ -191,12 +210,26 @@ Chart.prototype = {
     var txData = app.data.slice();
 
     if (app.options.filtered) {
-      txData = txData.filter(function (d){ return d.value === app.options.value;
+      txData = txData.filter(function (d){ return d.value === app.options.value &&
+       d.cycle ===  app.options.cycle ;
       })
     }
 
+    console.log(txData)
+
+
     var maxF3 = d3.max(txData, function (d) { return d.f3; })
     var maxF3X = d3.max(txData, function (d) { return d.f3x; })
+
+    chart.x = d3.scaleTime()
+      .domain([d3.min(txData, function (d) { return d.date; }), d3.max(txData, function (d) { return d.date; })])
+      .range([0, chart.width])
+      .nice();
+
+    var xAxis = d3.axisBottom()
+      .scale(chart.x);
+
+    chart.svg.select('.x.axis').call(xAxis);
 
     chart.y = d3.scaleSqrt()
       .domain([0, d3.max([maxF3,maxF3X])])
@@ -247,14 +280,11 @@ Chart.prototype = {
   formatTime = d3.timeFormat("%0m/%0d/%Y")
   percFormat = d3.format(",.1%") 
 
-  minDate = d3.min(app.data,function (d) {return d.date})
-  maxDate = d3.max(app.data,function (d) {return d.date})
+  minDate = d3.min(txData,function (d) {return d.date})
+  maxDate = d3.max(txData,function (d) {return d.date})
 
   totDays = (maxDate - minDate)/1000/60/60/24
   totReps = d3.sum(txData, function(d) { return d.f3; });
-
-  console.log(totReps)
-
 
     chart.svg
         .on("mouseover", function() { focus.style("display", null); })
