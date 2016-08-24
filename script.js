@@ -215,9 +215,6 @@ Chart.prototype = {
       })
     }
 
-    console.log(txData)
-
-
     var maxF3 = d3.max(txData, function (d) { return d.f3; })
     var maxF3X = d3.max(txData, function (d) { return d.f3x; })
 
@@ -275,16 +272,18 @@ Chart.prototype = {
         })
         .attr("d",lineF5);
 
-  var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
-  formatTime = d3.timeFormat("%0m/%0d/%Y")
-  percFormat = d3.format(",.1%") 
+    formatTime = d3.timeFormat("%0m/%0d/%Y")
+    percFormat = d3.format(",.1%") 
 
-  minDate = d3.min(txData,function (d) {return d.date})
-  maxDate = d3.max(txData,function (d) {return d.date})
+    minDate = d3.min(txData,function (d) {return d.date})
+    maxDate = d3.max(txData,function (d) {return d.date})
 
-  totDays = (maxDate - minDate)/1000/60/60/24
-  totReps = d3.sum(txData, function(d) { return d.f3; });
+    totDays = (maxDate - minDate)/1000/60/60/24;
+    totF3 = d3.sum(txData, function (d) { return d.f3; });
+    totF3X = d3.sum(txData, function (d) { return d.f3x; });
+    totF5 = d3.sum(txData, function (d) { return d.f5; });
 
     chart.svg
         .on("mouseover", function() { focus.style("display", null); })
@@ -292,18 +291,37 @@ Chart.prototype = {
         .on('mousemove', mousemove);
 
       function mousemove() {
+
           var x0 = chart.x.invert(d3.mouse(this)[0]),
           i = bisectDate(txData, x0, 1),
           d0 = txData[i - 1],
           d1 = txData[i],
-          d = x0 - d0.date > d1.date - x0 ? d1 : d0
-          percDays = ((d1.date-minDate)/1000/60/60/24)/totDays;
-          // percF3 = 
+          d = x0 - d0.date > d1.date - x0 ? d1 : d0,
+          percDays = ((d1.date-minDate)/1000/60/60/24)/totDays,
+
+          toolData = app.data.slice()
+
+          if (app.options.filtered) {
+            toolData = toolData.filter(function (d){ return d.value === app.options.value &&
+             d.cycle ===  app.options.cycle &&
+             d.date <= d1.date
+            })
+          };
+
+          percF3 = d3.sum(toolData,function (d) {return d.f3})/totF3;
+          percF3X = d3.sum(toolData,function (d) {return d.f3x})/totF3X;
+          percF5 = d3.sum(toolData,function (d) {return d.f5})/totF5;
+
+
+
       focus.select("#f3xcirc").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
       focus.select("#f3circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3) + ")");
       focus.select("#f5circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f5) + ")");
       d3.select("#date").html(function (d){return formatTime(d0.date)});
       d3.select("#percentDates").html(function (d){return percFormat(percDays)});
+      d3.select("#percentF3").html(percFormat(percF3));
+      d3.select("#percentF3X").html(percFormat(percF3X));
+      d3.select("#percentF5").html(percFormat(percF5));
     };
 
   }
