@@ -49,33 +49,44 @@
   </div>
 </div>
 
-<table>
-<tr>
-  <td>Date: </td>
-  <td id="date"></td>
-</tr>
+<div class="controls section">
+  <div class="container">
+    <div class="row">
+        <table>
+        
+        <tr>
+          <td class="offset-md-2 col-md-3">  </td>
+          <td class="col-md-3" align="center">Date: </td>
+          <td class="col-md-3" align="center">% of Cycle</td>          
+        </tr>
 
-<tr>
-  <td>Percentage of Election Cycle: </td>
-  <td id="percentDates"></td>
-</tr>
+        <tr>
+          <td class="col-md-3"> </td>
+          <td class="col-md-3" align="right" id="date"></td>
+          <td class="col-md-3" align="right" id="percentDates"></td>          
+        </tr>
 
-<tr>
-  <td>F3 Percentage of Election Cycle Reports: </td>
-  <td id="percentF3"></td>
-</tr>
+        <tr>
+          <td class="col-md-3"><span id="type"></span> on Form 3: </td>
+          <td class="col-md-3" align="right" id="numF3"></td>
+          <td class="col-md-3" align="right" id="percentF3"></td>
+        </tr>
 
-<tr>
-  <td>F3X Percentage of Election Cycle Reports: </td>
-  <td id="percentF3X"></td>
-</tr>
+        <tr>
+          <td class="col-md-3"><span id="type"></span> on Form 3X: </td>
+          <td class="col-md-3" align="right" id="numF3X"></td>
+          <td class="col-md-3" align="right" id="percentF3X"></td>
+        </tr>
 
-<tr>
-  <td>F5 Percentage of Election Cycle Reports: </td>
-  <td id="percentF5"></td>
-</tr>
-
-</table>
+        <tr>
+          <td class="col-md-3"><span id="type"></span> on Form 5: </td>
+          <td class="col-md-3" align="right" id="numF5"></td>          
+          <td class="col-md-3" align="right" id="percentF5"></td>
+        </tr>
+        </table>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript" src="script.js"></script>

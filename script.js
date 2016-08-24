@@ -322,7 +322,13 @@ Chart.prototype = {
       d3.select("#percentF3").html(percFormat(percF3));
       d3.select("#percentF3X").html(percFormat(percF3X));
       d3.select("#percentF5").html(percFormat(percF5));
-    };
+      d3.select("#numF3").html(function (d) {return d1.f3} );
+      d3.select("#numF3X").html(function (d) {return d1.f3x} );
+      d3.select("#numF5").html(function (d) {return d1.f5} );
 
+    };
+  
+      d3.selectAll("#type").html(function(){return app.options.value});
+          console.log(app.options.value)
   }
 }
