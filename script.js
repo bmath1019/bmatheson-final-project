@@ -164,7 +164,7 @@ function Chart(selector) {
     .style('text-anchor', 'end')
     .style('fill', '#000')
     .style('font-weight', 'bold')
-    .text("Quantity");
+    .text("Quantity (sq root)");
 
   pathF3X = chart.svg.append("path");
   pathF3 = chart.svg.append("path");

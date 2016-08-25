@@ -12,6 +12,12 @@ body{
   padding: 1em;
 }
 
+.footer {
+  background: linear-gradient(to bottom, #194375 100%, #264875 0%);
+  color: #DCDDD8;
+  padding: 1em;
+}
+
 .head{
 	font-weight: bold;
 }
