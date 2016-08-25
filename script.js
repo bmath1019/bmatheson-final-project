@@ -32,6 +32,8 @@ app = {
       new Chart('#chart')
     ];
     
+    d3.select('window').on('resize', app.resize);
+
     // Data Scale Transformations Reports / Pages / Dollars
     d3.select("#cy2012").on("click", function() { 
       if (app.options.cycle !== 2012) {app.options.cycle = 2012;
@@ -92,16 +94,14 @@ app = {
       app.components.forEach(function (d){d.update(); })
     }
     });
-
-
-
-    // app.update();
   },
 
-  update: function () {
-    app.components.forEach(function (c) { if (c.update) { c.update(); }});
-  }
+  resize: function () {
+    app.components.forEach(function (c) { if (c.resize) { c.resize(); }});
+  },
+
 }
+
 
 function Chart(selector) {
   var chart = this;

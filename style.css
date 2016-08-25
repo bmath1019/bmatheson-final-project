@@ -12,6 +12,10 @@ body{
   padding: 1em;
 }
 
+.head{
+	font-weight: bold;
+}
+
 #chart svg {
   display: block;
   margin: 0 auto;
@@ -21,6 +25,11 @@ body{
 	stroke: #E74C3C;
 	fill: none;
 	stroke-width: 4;
+}
+
+.f3text{
+	color: #E74C3C;
+	font-weight: 800;
 }
 
 #f3b{
@@ -40,6 +49,11 @@ body{
 	stroke-width: 4;
 }
 
+.f3xtext{
+	color: #3498DB;
+	font-weight: 800;
+}
+
 #f3xb{
 	border-color: #3498DB;
 	background-color: #3498DB;
@@ -55,6 +69,11 @@ body{
 	stroke: #D8DB58;
 	fill: none;	
 	stroke-width: 4;
+}
+
+.f5text{
+	color: #D8DB58;
+	font-weight: 800;
 }
 
 #f5b{
