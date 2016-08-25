@@ -13,7 +13,7 @@ app = {
   components: [],
 
   options: {
-    value: 'reports',
+    value: 'Reports',
     filtered: true,
     form: 'all',
     cycle: 2016,
@@ -51,19 +51,19 @@ app = {
     });
 
     // Data Scale Transformations Reports / Pages / Dollars
-    d3.select("#reports").on("click", function() { 
-      if (app.options.value !== 'reports') {app.options.value = 'reports';
+    d3.select("#Reports").on("click", function() { 
+      if (app.options.value !== 'Reports') {app.options.value = 'Reports';
        app.components.forEach(function (d) {d.update(); });
       }});
 
-    d3.select("#pages").on("click", function() { 
-      if (app.options.value !== 'pages') {app.options.value = 'pages';
+    d3.select("#Pages").on("click", function() { 
+      if (app.options.value !== 'Pages') {app.options.value = 'Pages';
       app.components.forEach(function (d) {d.update(); });
       }
     });
 
-    d3.select("#dollars").on("click", function() { 
-      if (app.options.value !== 'dollars') {app.options.value = 'dollars';
+    d3.select("#Dollars").on("click", function() { 
+      if (app.options.value !== 'Dollars') {app.options.value = 'Dollars';
       app.components.forEach(function (d) {d.update(); });
       }
     });
@@ -164,7 +164,7 @@ function Chart(selector) {
     .style('text-anchor', 'end')
     .style('fill', '#000')
     .style('font-weight', 'bold')
-    .text('Quantity');
+    .text("Quantity");
 
   pathF3X = chart.svg.append("path");
   pathF3 = chart.svg.append("path");
@@ -237,6 +237,8 @@ Chart.prototype = {
       .scale(chart.y)
       .tickSize(-chart.width);
 
+      console.log(app.options.value)
+
     chart.svg.select('.y.axis')
       .transition().duration(2000).call(yAxis);
 
@@ -308,23 +310,50 @@ Chart.prototype = {
             })
           };
 
-          percF3 = d3.sum(toolData,function (d) {return d.f3})/totF3;
-          percF3X = d3.sum(toolData,function (d) {return d.f3x})/totF3X;
-          percF5 = d3.sum(toolData,function (d) {return d.f5})/totF5;
+          ectdF3 = d3.sum(toolData,function (d) {return d.f3});
+          ectdF3X = d3.sum(toolData,function (d) {return d.f3x});
+          ectdF5 = d3.sum(toolData,function (d) {return d.f5});
 
+          percF3 = ectdF3/totF3;
+          percF3X = ectdF3X/totF3X;
+          percF5 = ectdF5/totF5;
 
+          var formatCurrency = d3.format("$,.2f");
+          var formatNumber = d3.format(",");
 
-      focus.select("#f3xcirc").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
-      focus.select("#f3circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3) + ")");
-      focus.select("#f5circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f5) + ")");
-      d3.select("#date").html(function (d){return formatTime(d0.date)});
-      d3.select("#percentDates").html(function (d){return percFormat(percDays)});
-      d3.select("#percentF3").html(percFormat(percF3));
-      d3.select("#percentF3X").html(percFormat(percF3X));
-      d3.select("#percentF5").html(percFormat(percF5));
-      d3.select("#numF3").html(function (d) {return d1.f3} );
-      d3.select("#numF3X").html(function (d) {return d1.f3x} );
-      d3.select("#numF5").html(function (d) {return d1.f5} );
+          focus.select("#f3xcirc").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3x) + ")");
+          focus.select("#f3circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f3) + ")");
+          focus.select("#f5circ").attr("transform", "translate(" + chart.x(d.date) + "," + chart.y(d.f5) + ")");
+          
+          d3.select("#date").html(function (d){return formatTime(d0.date)});
+          d3.select("#percentDates").html(function (d){return percFormat(percDays)});
+          d3.select("#percentF3").html(percFormat(percF3));
+          d3.select("#percentF3X").html(percFormat(percF3X));
+          d3.select("#percentF5").html(percFormat(percF5));
+          
+          d3.select("#numF3").html(function (d) { if (app.options.value === "Reports") {return formatNumber(d0.f3)};
+          if (app.options.value === "Pages") {return formatNumber(d1.f3)};
+          if (app.options.value === "Dollars") {return formatCurrency(d1.f3)}; } );
+          
+          d3.select("#numF3X").html(function (d) { if (app.options.value === "Reports") {return formatNumber(d0.f3x)};
+          if (app.options.value === "Pages") {return formatNumber(d1.f3x)};
+          if (app.options.value === "Dollars") {return formatCurrency(d1.f3x)}; } );
+          
+          d3.select("#numF5").html(function (d) { if (app.options.value === "Reports") {return formatNumber(d0.f5)};
+          if (app.options.value === "Pages") {return formatNumber(d1.f5)};
+          if (app.options.value === "Dollars") {return formatCurrency(d1.f5)}; } );
+
+          d3.select("#ectdF3").html(function () { if (app.options.value === "Reports") {return formatNumber(ectdF3)};
+          if (app.options.value === "Pages") {return formatNumber(ectdF3)};
+          if (app.options.value === "Dollars") {return formatCurrency(ectdF3)}; } );
+          
+          d3.select("#ectdF3X").html(function () { if (app.options.value === "Reports") {return formatNumber(ectdF3X)};
+          if (app.options.value === "Pages") {return formatNumber(ectdF3X)};
+          if (app.options.value === "Dollars") {return formatCurrency(ectdF3X)}; } );
+          
+          d3.select("#ectdF5").html(function () { if (app.options.value === "Reports") {return formatNumber(ectdF5)};
+          if (app.options.value === "Pages") {return formatNumber(ectdF5)};
+          if (app.options.value === "Dollars") {return formatCurrency(ectdF5)}; } );
 
     };
   
@@ -332,3 +361,5 @@ Chart.prototype = {
           console.log(app.options.value)
   }
 }
+
+

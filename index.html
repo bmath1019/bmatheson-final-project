@@ -23,15 +23,16 @@
 <div class="controls section">
   <div class="container">
     <div class="row">
+      <div><p>Election Cycle:</p></div>
       <div class="btn-group col-sm-3 offset-sm-5" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-secondary" id="cy2012">2012</button>
         <button type="button" class="btn btn-secondary" id="cy2014">2014</button>
         <button type="button" class="btn btn-secondary" id="cy2016">2016</button>
       </div>
       <div class="btn-group col-sm-3 offset-sm-5" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary" value= "reports" id="reports">Reports</button>
-        <button type="button" class="btn btn-secondary" value= "pages" id="pages">Pages</button>
-        <button type="button" class="btn btn-secondary" value= "dollars" id="dollars">Dollars</button>
+        <button type="button" class="btn btn-secondary" value= "Reports" id="Reports">Reports</button>
+        <button type="button" class="btn btn-secondary" value= "Pages" id="Pages">Pages</button>
+        <button type="button" class="btn btn-secondary" value= "Dollars" id="Dollars">Dollars</button>
       </div>
       <div class="col-sm-4 offset-sm-2">
         <button type="button" class="btn btn-secondary" id= "f3b">Form 3</button>
@@ -55,32 +56,37 @@
         <table>
         
         <tr>
-          <td class="offset-md-2 col-md-3">  </td>
-          <td class="col-md-3" align="center">Date: </td>
-          <td class="col-md-3" align="center">% of Cycle</td>          
+          <td class="col-md-3">  </td>
+          <td class="col-md-3" align="right">Date</td>
+          <td class="col-md-3" align="right">ECTD</td>
+          <td class="col-md-3" align="right">% of Total Cycle</td>          
         </tr>
 
         <tr>
           <td class="col-md-3"> </td>
           <td class="col-md-3" align="right" id="date"></td>
+          <td class="col-md-3" align="right" id="ectd"></td>
           <td class="col-md-3" align="right" id="percentDates"></td>          
         </tr>
 
         <tr>
-          <td class="col-md-3"><span id="type"></span> on Form 3: </td>
+          <td class="col-md-3" align="right"><span id="type"></span> on Form 3: </td>
           <td class="col-md-3" align="right" id="numF3"></td>
+          <td class="col-md-3" align="right" id="ectdF3"></td>       
           <td class="col-md-3" align="right" id="percentF3"></td>
         </tr>
 
         <tr>
-          <td class="col-md-3"><span id="type"></span> on Form 3X: </td>
+          <td class="col-md-3" align="right"><span id="type"></span> on Form 3X: </td>
           <td class="col-md-3" align="right" id="numF3X"></td>
+          <td class="col-md-3" align="right" id="ectdF3X"></td>
           <td class="col-md-3" align="right" id="percentF3X"></td>
         </tr>
 
         <tr>
-          <td class="col-md-3"><span id="type"></span> on Form 5: </td>
-          <td class="col-md-3" align="right" id="numF5"></td>          
+          <td class="col-md-3" align="right"><span id="type"></span> on Form 5: </td>
+          <td class="col-md-3" align="right" id="numF5"></td>
+          <td class="col-md-3" align="right" id="ectdF5"></td>      
           <td class="col-md-3" align="right" id="percentF5"></td>
         </tr>
         </table>
