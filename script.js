@@ -237,8 +237,6 @@ Chart.prototype = {
       .scale(chart.y)
       .tickSize(-chart.width);
 
-      console.log(app.options.value)
-
     chart.svg.select('.y.axis')
       .transition().duration(2000).call(yAxis);
 
@@ -358,7 +356,7 @@ Chart.prototype = {
     };
   
       d3.selectAll("#type").html(function(){return app.options.value});
-          console.log(app.options.value)
+
   }
 }
 
