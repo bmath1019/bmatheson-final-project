@@ -16,7 +16,7 @@ app = {
     value: 'Reports',
     filtered: true,
     form: 'all',
-    cycle: 2016,
+    cycle: 2014,
   },
 
   initialize: function (data) {
@@ -297,9 +297,9 @@ Chart.prototype = {
           d0 = txData[i - 1],
           d1 = txData[i],
           d = x0 - d0.date > d1.date - x0 ? d1 : d0,
-          percDays = ((d1.date-minDate)/1000/60/60/24)/totDays,
+          percDays = ((d1.date-minDate)/1000/60/60/24)/totDays;
 
-          toolData = app.data.slice()
+          toolData = app.data.slice();
 
           if (app.options.filtered) {
             toolData = toolData.filter(function (d){ return d.value === app.options.value &&
