@@ -112,7 +112,7 @@ function Chart(selector) {
     top: 15, right: 25, bottom: 40, left: 75
   };
 
-  chart.width = 1000 - margin.left - margin.right;
+  chart.width = 1400 - margin.left - margin.right;
   chart.height = 400 - margin.top - margin.bottom;
 
   chart.svg = d3.select(selector)
@@ -272,7 +272,7 @@ Chart.prototype = {
         })
         .attr("d",lineF5);
 
-    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+    var bisectDate = d3.bisector(function(d) { return d.date; }).right;
 
     formatTime = d3.timeFormat("%0m/%0d/%Y")
     percFormat = d3.format(",.1%") 
