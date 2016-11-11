@@ -22,7 +22,7 @@ app = {
   initialize: function (data) {
     app.data = data;
 
-    parseDate = d3.timeParse("%m/%d/%Y"); //https://bl.ocks.org/d3noob/0e276dc70bb9184727ee47d6dd06e915
+    parseDate = d3.timeParse("%Y-%m-%d"); //https://bl.ocks.org/d3noob/0e276dc70bb9184727ee47d6dd06e915
 
     data.forEach(function(d) {
         d.date = parseDate(d.date)
