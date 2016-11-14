@@ -16,7 +16,7 @@ app = {
     value: 'Reports',
     filtered: true,
     form: 'all',
-    cycle: 2014,
+    cycle: 2016,
   },
 
   initialize: function (data) {
